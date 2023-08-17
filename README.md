@@ -2,22 +2,34 @@
 
 A simple script which assigns clinical schools to students based on their preferences and availabilities.
 
-# Adding Schools
+## Adding Schools
 
-Add a text file in csv format where the ____ column is ____
-- First: School Name
-- Second: Capacity for the School
+Add a text file in csv format where the column ____ is ____
+- 1: School Name
+- 2: Capacity for the School
+- 3: 'M' if Metro and 'R' if Rural
 
-# Adding Students
-Add a text file in csv format where the ____ column is ____
+## Adding Pathways
 
-- First: Student Name
-- Second: Ranking for the First School
-- Third: Ranking for the Second School
-- Fourth: Ranking for the Third School
-and so on...
+Add a text file in csv format where the column ____ is ____
+- 1: Pathway Name
+- 2: Capacity for the Pathway
 
-The order of schools will match the order in the school file.
+## Adding Students
+
+Assuming there are n schools and m pathways
+
+Add a text file in csv format where the column ____ is ____
+
+- 1: Student Name
+- 2 to n + 1: Ranks for Year 4 Schools
+- n + 2 to 2n + 1: Ranks for Year 5 Schools
+- 2n + 2 to 2n + m + 1: Ranks for Pathways
+- 2n + m + 2 to 2n + m + 4: Rank for Year 4, Year 5, Pathway
+
+The order of schools will match the order in the school file
+
+The order of pathways will match the order of the pathway file
 
 # Using the program
 
@@ -31,4 +43,9 @@ The order of schools will match the order in the school file.
 
 e.g.
 
-```python3 placements.py schools_ex.csv students_ex.csv```
+```python3 placements.py schools_ex.csv pathways_ex.csv students_ex.csv```
+
+## Current Constraints
+- Every student gets assigned 1 school in Year 4, Year 5 and 1 Pathway
+- At least 1 school must be metro
+- A higher preference for pathways scales you down year 4 and year 5 etc.
