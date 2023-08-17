@@ -13,10 +13,18 @@ ranks = [[int(rank) for rank in student[1:]] for student in students]
 num_students = len(students)
 num_schools = len(schools)
 
+if num_students > sum([int(capacity[1]) for capacity in schools]):
+    print('There are more students than school spots available')
+    sys.exit(1)
+
+if any(len(student) <= num_schools for student in students):
+    print('Students needs to have a ranking for all schools')
+    sys.exit(1)
+
 solver = pywraplp.Solver.CreateSolver("SCIP")
 
 # x[i, j] is an array of 0-1 variables, which will be 1
-# if student i is assigned to school j
+# If student i is assigned to school j
 x = {}
 for i in range(num_students):
     for j in range(num_schools):
@@ -41,6 +49,6 @@ status = solver.Solve()
 print(f"Sum of Rankings = {int(solver.Objective().Value())}\n")
 for i in range(num_students):
     for j in range(num_schools):
-        # Test if x[i,j] is 1 (with tolerance for floating point arithmetic).
+        # Test if x[i,j] is 1 (with tolerance for floating point arithmetic)
         if x[i, j].solution_value() > 0.5:
             print(f"{students[i][0]} assigned to {schools[j][0]} which they ranked {ranks[i][j]}")
