@@ -36,9 +36,7 @@ if any(len(student) <= 2 * num_schools + num_pathways for student in students):
 solver = pywraplp.Solver.CreateSolver("SCIP")
 
 # Having the solver assign either 0 or 1 where 1 means  the option is chosen
-y4 = {}
-y5 = {}
-path = {}
+y4, y5, path = {}, {}, {}
 for i in range(num_students):
     for j in range(num_schools):
         y4[i, j] = solver.IntVar(0, 1, "")

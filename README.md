@@ -27,6 +27,9 @@ Add a text file in csv format where the column ____ is ____
 - 2n + 2 to 2n + m + 1: Ranks for Pathways
 - 2n + m + 2 to 2n + m + 4: Rank for Year 4, Year 5, Pathway
 
+For the example cohort in ```csv/students_ex```
+![](images/students_annotated.png)
+
 The order of schools will match the order in the school file
 
 The order of pathways will match the order of the pathway file
@@ -43,7 +46,7 @@ The order of pathways will match the order of the pathway file
 
 e.g.
 
-```python3 placements.py schools_ex.csv pathways_ex.csv students_ex.csv```
+```python3 placements.py csv/schools_ex csv/pathways_ex csv/students_ex```
 
 ## Current Constraints
 - Every student gets assigned 1 school in Year 4, Year 5 and 1 Pathway
