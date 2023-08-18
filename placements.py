@@ -99,6 +99,9 @@ if __name__ == "__main__":
 
     status = solver.Solve()
 
+    if status not in [pywraplp.Solver.OPTIMAL, pywraplp.Solver.FEASIBLE]:
+        print("No possible assignment found")
+        sys.exit()
 
     # printing out the solution
     for i in range(num_students):
