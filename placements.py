@@ -49,15 +49,15 @@ def set_constraints(solver, num_students, schools, pathways, y4, y5, path):
 
         # There must be at least 1 metro school between y4 and y5
         solver.Add(
-            solver.Sum([y4[i, j] * int(schools[j][2] == 'M') for j in range(len(schools))]) + 
-            solver.Sum([y5[i, j] * int(schools[j][2] == 'M') for j in range(len(schools))]) 
+            solver.Sum([y4[i, j] * int(schools[j][3] == 'M') for j in range(len(schools))]) + 
+            solver.Sum([y5[i, j] * int(schools[j][3] == 'M') for j in range(len(schools))]) 
             >= 1
         )
 
     # Each school and pathway is assigned to at most the given capacity
     for j in range(len(schools)):
         solver.Add(solver.Sum([y4[i, j] for i in range(num_students)]) <= int(schools[j][1]))
-        solver.Add(solver.Sum([y5[i, j] for i in range(num_students)]) <= int(schools[j][1]))
+        solver.Add(solver.Sum([y5[i, j] for i in range(num_students)]) <= int(schools[j][2]))
 
     for j in range(len(pathways)):
         solver.Add(solver.Sum([path[i, j] for i in range(num_students)]) <= int(pathways[j][1]))

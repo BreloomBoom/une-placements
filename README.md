@@ -6,8 +6,9 @@ A simple script which assigns clinical schools to students based on their prefer
 
 Add a text file in csv format where the column ____ is ____
 - 1: School Name
-- 2: Capacity for the School
-- 3: 'M' if Metro and 'R' if Rural
+- 2: Capacity for Year 4
+- 3: Capacity for Year 5
+- 4: 'M' if Metro and 'R' if Rural
 
 ## Adding Pathways
 
