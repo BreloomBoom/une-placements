@@ -1,6 +1,6 @@
 # une-placements
 
-A simple script which assigns clinical schools to students based on their preferences and availabilities.
+A simple script which assigns clinical schools and pathways to students based on their preferences.
 
 ## Adding Schools
 
