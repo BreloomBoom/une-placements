@@ -47,7 +47,7 @@ The order of pathways will match the order of the pathway file
 
 e.g.
 
-```python3 placements.py csv/schools_ex csv/pathways_ex csv/students_ex```
+```python3 -B placements.py csv/schools_ex csv/pathways_ex csv/students_ex```
 
 ## Current Constraints
 - Every student gets assigned 1 school in Year 4, Year 5 and 1 Pathway

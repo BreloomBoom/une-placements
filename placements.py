@@ -1,16 +1,20 @@
-"""
+'''
 This script takes student preferences with school and pathway 
 capacities to assign each student their schools and pathways
 
 Usage: python3 placements.py [school file] [pathway file] [student file]
-"""
+'''
 
 import csv
 import sys
 from ortools.linear_solver import pywraplp
 
-# Scaling for preference between Year 4, Year 5 and Pathways
-scaling = [1, 1.2, 1.5]
+import config as cfg
+
+def check_cmd_line_args():
+    if len(sys.argv) != 4:
+        print('Usage: python3 placements.py [school file] [pathway file] [student file]')
+        sys.exit(1)
 
 def load_data(file_name, delim=','):
     return list(csv.reader(open(file_name, 'r'), delimiter=delim))
@@ -30,13 +34,13 @@ def check_errors(schools, pathways, students):
         sys.exit(1)
 
 def calc_ranks(students, start, end, scale):
-    return [[int(rank) * scaling[int(student[scale]) - 1] for rank in student[start:end]] for student in students]
+    return [[int(rank) * cfg.scaling[int(student[scale]) - 1] for rank in student[start:end]] for student in students]
 
 def solver_variables(solver, num_students, num_choices):
     variables = {}
     for i in range(num_students):
         for j in range(num_choices):
-            variables[i, j] = solver.IntVar(0, 1, "")
+            variables[i, j] = solver.IntVar(0, 1, '')
     
     return variables
 
@@ -100,13 +104,11 @@ def print_solution(students, y4, y5, path, schools, pathways):
         
         solution.append(f'{students[i][0]},{y4_school},{y5_school},{pathway}')
     
-    with open('output.csv', 'w') as file:
+    with open('assignment.csv', 'w') as file:
         file.write('\n'.join(solution))
 
 def main():
-    if len(sys.argv) != 4:
-        print('Usage: python3 placements.py [school file] [pathway file] [student file]')
-        sys.exit(1)
+    check_cmd_line_args()
 
     schools, pathways, students = load_all(sys.argv[1], sys.argv[2], sys.argv[3])
 
@@ -117,7 +119,7 @@ def main():
     y5_ranks = calc_ranks(students, cols[1], cols[2], cols[3] + 1)
     path_ranks = calc_ranks(students, cols[2], cols[3], cols[3] + 2)
 
-    solver = pywraplp.Solver.CreateSolver("SCIP")
+    solver = pywraplp.Solver.CreateSolver('SCIP')
 
     y4 = solver_variables(solver, len(students), len(schools))
     y5 = solver_variables(solver, len(students), len(schools))
@@ -135,5 +137,5 @@ def main():
 
     print_solution(students, y4, y5, path, schools, pathways)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
