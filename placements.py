@@ -7,6 +7,7 @@ Usage: python3 placements.py [school file] [pathway file] [student file]
 
 import csv
 import sys
+
 from ortools.linear_solver import pywraplp
 
 import config as cfg
@@ -29,7 +30,7 @@ def check_errors(schools, pathways, students):
     elif len(students) > sum([int(capacity[1]) for capacity in pathways]):
         print('There are more students than pathway spots available')
         sys.exit(1)
-    elif any(len(student) <= 2 * len(schools) + len(pathways) + 3 for student in students):
+    elif any(len(student) != 2 * len(schools) + len(pathways) + 4 for student in students):
         print('Students needs to have a ranking for all schools and pathways')
         sys.exit(1)
 
