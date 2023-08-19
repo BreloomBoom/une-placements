@@ -52,4 +52,5 @@ e.g.
 ## Current Constraints
 - Every student gets assigned 1 school in Year 4, Year 5 and 1 Pathway
 - At least 1 school must be metro
-- A higher preference for pathways scales you down year 4 and year 5 etc.
+- A higher preference for pathways scales you down year 4 and year 5 etc
+- Rural ranks can be scaled so that rural schools are prioritied over metros

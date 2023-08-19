@@ -67,11 +67,11 @@ def set_constraints(solver, num_students, schools, pathways, y4, y5, path):
     for j in range(len(pathways)):
         solver.Add(solver.Sum([path[i, j] for i in range(num_students)]) <= int(pathways[j][1]))
 
-def add_obj_terms(choices, students, ranks, variables):
+def add_obj_terms(choices, students, ranks, variables, scale=1):
     objective_terms = []
     for i in range(len(students)):
         for j in range(len(choices)):
-            objective_terms.append(ranks[i][j] * variables[i, j])
+            objective_terms.append(ranks[i][j] * variables[i, j] / scale)
     
     return objective_terms
 
@@ -130,7 +130,7 @@ def main():
 
     # adding how the cost is calculated to the solver
     objective_terms = add_obj_terms(schools, students, y4_ranks, y4) + \
-                      add_obj_terms(schools, students, y5_ranks, y5) + \
+                      add_obj_terms(schools, students, y5_ranks, y5, cfg.rural_scaling) + \
                       add_obj_terms(pathways, students, path_ranks, path)
 
     solver.Minimize(solver.Sum(objective_terms))
