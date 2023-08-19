@@ -74,7 +74,18 @@ def find_choice(solution, student, choices):
     for i in range(len(choices)):
         if solution[student, i].solution_value() > 0.5:
             return choices[i][0]
-        
+
+def report_status(solver):
+    status = solver.Solve()
+    if status == pywraplp.Solver.OPTIMAL:
+        print('This is an optimal solution')
+    elif status == pywraplp.Solver.FEASIBLE:
+        print('This is an approximate solution')
+    else:
+        print("No possible assignment found")
+        sys.exit()
+
+
 def print_solution(students, y4, y5, path, schools, pathways):
     for i in range(len(students)):
         y4_school = find_choice(y4, i, schools)
@@ -114,12 +125,8 @@ def main():
                       add_obj_terms(pathways, students, path_ranks, path)
 
     solver.Minimize(solver.Sum(objective_terms))
-
-    status = solver.Solve()
-    if status not in [pywraplp.Solver.OPTIMAL, pywraplp.Solver.FEASIBLE]:
-        print("No possible assignment found")
-        sys.exit()
-
+    report_status(solver)
+    
     print_solution(students, y4, y5, path, schools, pathways)
 
 if __name__ == "__main__":
