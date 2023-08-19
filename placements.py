@@ -82,20 +82,26 @@ def report_status(solver):
     elif status == pywraplp.Solver.FEASIBLE:
         print('This is an approximate solution')
     else:
-        print("No possible assignment found")
+        print('No possible assignment found')
         sys.exit()
 
 
 def print_solution(students, y4, y5, path, schools, pathways):
+    solution = []
     for i in range(len(students)):
         y4_school = find_choice(y4, i, schools)
-        print(f"{students[i][0]} assigned to {y4_school} in Year 4")
+        print(f'{students[i][0]} assigned to {y4_school} in Year 4')
 
         y5_school = find_choice(y5, i, schools)
-        print(f"{students[i][0]} assigned to {y5_school} in Year 5")
+        print(f'{students[i][0]} assigned to {y5_school} in Year 5')
 
         pathway = find_choice(path, i, pathways)
-        print(f"{students[i][0]} assigned to the pathway {pathway}\n")
+        print(f'{students[i][0]} assigned to the pathway {pathway}\n')
+        
+        solution.append(f'{students[i][0]},{y4_school},{y5_school},{pathway}')
+    
+    with open('output.csv', 'w') as file:
+        file.write('\n'.join(solution))
 
 def main():
     if len(sys.argv) != 4:
@@ -126,7 +132,7 @@ def main():
 
     solver.Minimize(solver.Sum(objective_terms))
     report_status(solver)
-    
+
     print_solution(students, y4, y5, path, schools, pathways)
 
 if __name__ == "__main__":
